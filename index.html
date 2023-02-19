@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vue Practice</title>
+
+        <!-- Vue Style -->
+        <style>
+            .box {
+                width: 100px;
+                height: 100px;
+                background-color: red;
+            }
+            .box.blue {
+                width: 100px;
+                height: 100px;
+                background-color: blue;
+            }
+            .box.green {
+                width: 100px;
+                height: 100px;
+                background-color: green;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <!-- Vue Data -->
+            {{ greeting }}
+
+            <!-- Vue Input (two-way data binding) -->
+            <input type="text" v-model="greeting">
+
+            <hr>
+
+            <!-- Vue Event ("IF-ELSE" statement in Vue) -->
+            <div v-if="isVisible" class="box blue"></div>
+            <div v-else           class="box green"></div>
+
+            <!-- Almost the same as the above, (The only difference is that the element is always rendered and will only be toggled with CSS) -->
+            <!-- div v-show="isVisible" class="box" -->
+        </div>
+
+        <!-- Vue CDN -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+        <!-- Vue Script -->
+        <script>
+            let app = Vue.createApp({
+                data: function() {
+                    return {
+                        greeting: 'Hello Vue 3',
+                        isVisible: true
+                    }
+                }
+            })
+
+            <!-- Mounting the app. Equals to el: '#app' -->
+            app.mount('#app')
+        </script>
+    </body>
+</html>
