@@ -22,11 +22,16 @@
                 height: 100px;
                 background-color: green;
             }
+
+            /* Hiding elements with CSS */
+            [v_cloak] {
+                display: none;
+            }
         </style>
     </head>
 
     <body>
-        <div id="app">
+        <div id="app" v-cloak>
             <!-- Vue Data -->
             {{ greeting }}
 
@@ -57,7 +62,7 @@
                 }
             })
 
-            <!-- Mounting the app. Equals to el: '#app' -->
+            // Mounting the app. Equals to el: '#app'
             app.mount('#app')
         </script>
     </body>
