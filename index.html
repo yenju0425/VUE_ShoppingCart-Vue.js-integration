@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vue Practice</title>
 
-        <!-- Vue Style -->
         <style>
             .box {
                 width: 100px;
@@ -27,19 +26,17 @@
             [v-cloak] {
                 display: none;
             }
+
+            input {
+                margin: 10px;
+                display: block;
+            }
         </style>
     </head>
 
     <body>
         <div id="app" v-cloak>
-            <!-- Vue Data -->
-            {{ greeting }}
-
-            <!-- Vue Input (two-way data binding) -->
-            <input @keyup.enter="Greet_1" v-model="greeting">
-
-            <!-- The above is the same as the below (let greeting from Vue Data actually be the parameter) -->
-            <input @keyup.enter="Greet_2(greeting)" v-model="greeting">
+            <login-form>
 
             <hr>
 
@@ -85,6 +82,31 @@
                     }
                 }
             })
+
+            app.component('login-form', {
+                template: `
+                    <!-- Preventing the default behavior of the form (which is to refresh the page) -->
+                    <form @submit.prevent="SubmitForm">
+                        {{ title }}
+                        <input type="email" placeholder="Enter your name" v-model="email">
+                        <input type="password" placeholder="Enter your password" v-model="password">
+                        <button type="submit">Submit</button>
+                    </form>
+                `,
+                data () {
+                    return {
+                        title: 'Login Form',
+                        email: '',
+                        password: ''
+                    }
+                },
+                methods: {
+                    SubmitForm() {
+                        console.log(this.email, this.password)
+                    }
+                }
+            })
+
 
             // Mounting the app. Equals to el: '#app'
             app.mount('#app')
