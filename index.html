@@ -24,7 +24,7 @@
             }
 
             /* Hiding elements with CSS */
-            [v_cloak] {
+            [v-cloak] {
                 display: none;
             }
         </style>
@@ -36,9 +36,22 @@
             {{ greeting }}
 
             <!-- Vue Input (two-way data binding) -->
-            <input type="text" v-model="greeting">
+            <input @keyup.enter="Greet_1" v-model="greeting">
+
+            <!-- The above is the same as the below (let greeting from Vue Data actually be the parameter) -->
+            <input @keyup.enter="Greet_2(greeting)" v-model="greeting">
 
             <hr>
+
+            <!--  Vue Event (click event) -->
+            <button v-on:click="isVisible = !isVisible">Change Color</button>
+
+            <!-- The above is the same as the below -->
+            <button @click="isVisible = !isVisible">Change Color</button>
+
+            <!-- The above is the same as the below -->
+            <button v-on:click="ChangeColor">Change Color</button>
+
 
             <!-- Vue Event ("IF-ELSE" statement in Vue) -->
             <div v-if="isVisible" class="box blue"></div>
@@ -58,6 +71,17 @@
                     return {
                         greeting: 'Hello Vue 3',
                         isVisible: true
+                    }
+                },
+                methods: {
+                    ChangeColor() {
+                        this.isVisible = !this.isVisible
+                    },
+                    Greet_1() {
+                        console.log(this.greeting)
+                    },
+                    Greet_2(greeting) {
+                        console.log(greeting)
                     }
                 }
             })
