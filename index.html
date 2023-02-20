@@ -36,6 +36,7 @@
 
     <body>
         <div id="app" v-cloak>
+            <!-- Please note that ChatGPT says you should put login-form inside the div with id="app" (otherwise it will be out of control 😬) -->
             <login-form>
 
             <hr>
@@ -63,6 +64,7 @@
 
         <!-- Vue Script -->
         <script>
+            // This VUE app can be viewed as a controller that will function in "app" div (Because we have mounted the app to the div with id="app")
             let app = Vue.createApp({
                 data: function() {
                     return {
@@ -83,21 +85,30 @@
                 }
             })
 
+            // Registering a component "login-form"
             app.component('login-form', {
                 template: `
                     <!-- Preventing the default behavior of the form (which is to refresh the page) -->
                     <form @submit.prevent="SubmitForm">
-                        {{ title }}
-                        <input type="email" placeholder="Enter your name" v-model="email">
-                        <input type="password" placeholder="Enter your password" v-model="password">
+                        <h1>{{ title }}</h1>
+
+                        <!-- The v-bind directive is used to bind an attribute to an expression -->
+                        <!-- Please note that v-model="email" also does :modelValue="email" -->
+                        <custom-input type="email" v-model="email" placeholder="Enter your name" v-bind:label="emailLable" />
+                        <custom-input type="password" v-model="password" placeholder="Enter your password" v-bind:label="passwordLable" />
+
                         <button type="submit">Submit</button>
                     </form>
                 `,
+                // To tell Vue that this component is a child component
+                components: ['custom-input'],
                 data () {
                     return {
                         title: 'Login Form',
                         email: '',
-                        password: ''
+                        password: '',
+                        emailLable: 'Email',
+                        passwordLable: 'Password'
                     }
                 },
                 methods: {
@@ -107,6 +118,32 @@
                 }
             })
 
+            app.component('custom-input', {
+                template: `
+                    <label>
+                        {{ label }}
+                        <input type="text" v-model="inputValue" />
+                    </label>
+                `,
+                // The information that is passed from the parent component
+                props: ['label', 'modelValue'],
+                computed: {
+                    inputValue: {
+                        get() {
+                            return this.modelValue
+                        },
+                        set(value) {
+                            console.log(value)
+                        }
+                    }
+                }
+                /*,
+                data () {
+                    return {
+                        inputValue: ''
+                    }
+                }*/
+            })
 
             // Mounting the app. Equals to el: '#app'
             app.mount('#app')
