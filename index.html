@@ -94,8 +94,10 @@
 
                         <!-- The v-bind directive is used to bind an attribute to an expression -->
                         <!-- Please note that v-model="email" also does :modelValue="email" -->
-                        <custom-input type="email" v-model="email" placeholder="Enter your name" v-bind:label="emailLable" />
-                        <custom-input type="password" v-model="password" placeholder="Enter your password" v-bind:label="passwordLable" />
+                        <!-- custom-input type="email" v-model="email" placeholder="Enter your name" v-bind:label="emailLable" /-->
+                        <!-- custom-input type="password" v-model="password" placeholder="Enter your password" v-bind:label="passwordLable" /-->
+
+                        <p v-for="str in input" v-bind:key="str">{{ str }}</p>
 
                         <button type="submit">Submit</button>
                     </form>
@@ -105,6 +107,11 @@
                 data () {
                     return {
                         title: 'Login Form',
+                        input: [
+                            'email',
+                            'password',
+                            'name'
+                        ],
                         email: '',
                         password: '',
                         emailLable: 'Email',
