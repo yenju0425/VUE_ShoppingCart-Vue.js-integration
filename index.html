@@ -94,10 +94,16 @@
 
                         <!-- The v-bind directive is used to bind an attribute to an expression -->
                         <!-- Please note that v-model="email" also does :modelValue="email" -->
-                        <!-- custom-input type="email" v-model="email" placeholder="Enter your name" v-bind:label="emailLable" /-->
-                        <!-- custom-input type="password" v-model="password" placeholder="Enter your password" v-bind:label="passwordLable" /-->
+                        <!-- custom-input type="email" v-model="email" placeholder="Enter your name" v-bind:label="emailLabel" /-->
+                        <!-- custom-input type="password" v-model="password" placeholder="Enter your password" v-bind:label="passwordLabel" /-->
 
-                        <p v-for="str in input" v-bind:key="str">{{ str }}</p>
+                        <custom-input
+                            v-for="(input, i) in inputs"
+                            :key="i"
+                            v-model="input.value"
+                            :label="input.label"
+                            :type="input.type"
+                        />
 
                         <button type="submit">Submit</button>
                     </form>
@@ -107,20 +113,24 @@
                 data () {
                     return {
                         title: 'Login Form',
-                        input: [
-                            'email',
-                            'password',
-                            'name'
-                        ],
-                        email: '',
-                        password: '',
-                        emailLable: 'Email',
-                        passwordLable: 'Password'
+                        inputs: [
+                            {
+                                label: "Email",
+                                value: "",      // This value will v-model later
+                                type: "email"
+
+                            },
+                            {
+                                label: "Password",
+                                value: "",      // This value will v-model later
+                                type: "password"
+                            }
+                        ]
                     }
                 },
                 methods: {
                     SubmitForm() {
-                        console.log(this.email, this.password)
+                        console.log(this.inputs[0].value, this.inputs[1].value)
                     }
                 }
             })
@@ -129,11 +139,11 @@
                 template: `
                     <label>
                         {{ label }}
-                        <input type="text" v-model="inputValue" />
+                        <input type="type" v-model="inputValue" />
                     </label>
                 `,
                 // The information that is passed from the parent component (These variables are read-only)
-                props: ['label', 'modelValue'],
+                props: ['label', 'type', 'modelValue'],
                 computed: {
                     inputValue: {
                         get() {
