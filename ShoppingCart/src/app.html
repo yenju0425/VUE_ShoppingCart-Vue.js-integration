@@ -23,10 +23,13 @@
             <span>Past Orders</span>
           </a>
         </nav>
-        <a href="#" class="top-bar-cart-link">
+
+        <!-- When the user clicks the cart icon, toggle the sidebar -->
+        <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart (0)</span>
         </a>
+
       </header>
 
       <div class="splash-container">
@@ -69,12 +72,14 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
+                    <!-- Use the v-model.number directive to make sure the value is a number -->
                     <input type="number" v-model.number="inventory.carrots">
                   </div>
                 </div>
               </form>
             </div>
             <div class="card-footer">
+              <!-- Use the addToCart method to add the item to the cart -->
               <button @click="addToCart('carrots')" class="btn btn-light">
                 Add to cart
               </button>
@@ -115,7 +120,10 @@
               </form>
             </div>
             <div class="card-footer">
-              <button class="btn btn-light">Add to cart</button>
+              <!-- Use the addToCart method to add the item to the cart -->
+              <button @click="addToCart('pineapples')" class="btn btn-light">
+                Add to cart
+              </button>
             </div>
           </div>
 
@@ -154,6 +162,10 @@
             </div>
             <div class="card-footer">
               <button class="btn btn-light">Add to cart</button>
+              <!-- Use the addToCart method to add the item to the cart -->
+              <button @click="addToCart('cherries')" class="btn btn-light">
+                Add to cart
+              </button>
             </div>
           </div>
 
@@ -161,36 +173,106 @@
 
       </main>
 
+      <!-- Use showSidebar to toggle the sidebar -->
+      <sidebar v-if = "showSidebar"
+      ></sidebar>
+
       <footer>
       </footer>
 
     </div>
-      
-    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- You should include the latest version of Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Your VUE code goes here -->
     <script>
       let app = Vue.createApp({
         data() {
           return {
+            showSidebar: false,
+
             inventory: {
-              carrots: 0,
-              pineapples: 0,
-              cherries: 0
+              carrots:    0,  // 🥕
+              pineapples: 0,  // 🍍
+              cherries:   0   // 🍒
             },
             cart: {
-              carrots: 0,
-              pineapples: 0,
-              cherries: 0
+              carrots:    0,  // 🥕
+              pineapples: 0,  // 🍍
+              cherries:   0   // 🍒
             }
           }
         },
         methods: {
+          // Add the quantity of a product to the cart
           addToCart(type) {
+            // Add whatever is in the inventory to the cart, based on the type
             this.cart[type] += this.inventory[type]
+            // Reset the inventory to 0
+            this.inventory[type] = 0
             console.log(this.cart)
+          },
+
+          // Toggle the sidebar
+          toggleSidebar() {
+            this.showSidebar = !this.showSidebar
           }
         }
       })
 
+      app.component('sidebar',{
+        template: `
+          <aside class="cart-container">
+          <div class="cart">
+            <h1 class="cart-title spread">
+              <span>
+                Cart
+                <i class="icofont-cart-alt icofont-1x"></i>
+              </span>
+              <button class="cart-close">&times;</button>
+            </h1>
+
+            <div class="cart-body">
+              <table class="cart-table">
+                <thead>
+                  <tr>
+                    <th><span class="sr-only">Product Image</span></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><i class="icofont-carrot icofont-3x"></i></td>
+                    <td>Carrot</td>
+                    <td>$1.00</td>
+                    <td class="center">1</td>
+                    <td>$1.00</td>
+                    <td class="center">
+                      <button class="btn btn-light cart-remove">
+                        &times;
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p class="center"><em>No items in cart</em></p>
+              <div class="spread">
+                <span><strong>Total:</strong> $1.00</span>
+                <button class="btn btn-light">Checkout</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+        `
+      })
+
+      // Always remember to mount your app
       app.mount('#app')
     </script>
   </body>
