@@ -97,8 +97,8 @@
       <sidebar
         v-if="showSidebar"
         :toggle="toggleSidebar"
+        :inventory="inventory"
         :cart="cart"
-        :prices="prices"
       ></sidebar>
 
       <footer>
@@ -117,24 +117,27 @@
             showSidebar: false,
 
             // This inventory object will be populated with the data from the food.json file
-            inventory: []
+            inventory: [],
+
+            // This cart object will store the items that are added to the cart
+            cart: {}
           }
         },
         methods: {
           // Add the quantity of a product to the cart
           addToCart(index) {
-            // Add the cart property to the inventory object if it doesn't exist
-            if (!this.inventory[index].cart) {
-              this.inventory[index].cart = 0
+            // Set the cart to 0 if it doesn't exist
+            if (!this.cart[index]) {
+              this.cart[index] = 0
             }
 
             // Add whatever is in the inventory to the cart, based on the type
-            this.inventory[index].cart += this.inventory[index].quantity
+            this.cart[index] += this.inventory[index].quantity
 
             // Reset the inventory to 0
             this.inventory[index].quantity = 0
 
-            console.log(this.inventory[index])
+            console.log(this.cart)
           },
 
           // Toggle the sidebar
@@ -155,11 +158,14 @@
 
       app.component('sidebar',{
         // "toggle" is the function that will be called when the user clicks on the close button
-        props: ['toggle', 'cart', 'prices'],
+        props: ['toggle', 'inventory', 'cart'],
         computed: {
           cartTotal() {
             // Calculate the total price of the cart
-            return this.cart.carrots * this.prices.carrots + this.cart.pineapples * this.prices.pineapples + this.cart.cherries * this.prices.cherries
+            // Please note that the key is the index of the item in the inventory object
+            return Object.keys(this.cart).reduce((total, key) => {
+              return total + (this.inventory[key].price.USD * this.cart[key])
+            }, 0)
           }
         },
         template: `
@@ -187,12 +193,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><i class="icofont-carrot icofont-3x"></i></td>
-                    <td>Carrot</td>
-                    <td>$1.00</td>
-                    <td class="center">{{ cart.carrots }}</td>
-                    <td>$1.00</td>
+                  <!-- Use the v-for directive to loop through the cart object -->
+                  <tr v-for="(quantity, product_index, i) in cart" :key="i">
+                    <td class="center"><i class="icofont-{{ inventory[product_index].icon }} icofont-3x"></i></td>
+                    <td class="center">{{ inventory[product_index].name }}</td>
+                    <td class="center">\${{ inventory[product_index].price.USD }}</td>
+                    <td class="center">{{ quantity }}</td>
+                    <td class="center">\${{ inventory[product_index].price.USD * quantity }}</td>
                     <td class="center">
                       <button class="btn btn-light cart-remove">
                         &times;
@@ -202,7 +209,7 @@
                 </tbody>
               </table>
 
-              <p class="center"><em>No items in cart</em></p>
+              <p class="center" v-if="!Object.keys(cart).length"><em>No items in cart</em></p>
               <div class="spread">
                 <!-- Remember to use the $ sign to display the total price -->
                 <span><strong>Total:</strong> \${{ cartTotal }} </span>
