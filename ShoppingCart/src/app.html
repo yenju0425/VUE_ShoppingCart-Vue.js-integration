@@ -27,7 +27,7 @@
         <!-- When the user clicks the cart icon, toggle the sidebar -->
         <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart (0)</span>
+          <span>Cart ({{ totalQuantity }})</span>
         </a>
 
       </header>
@@ -99,6 +99,7 @@
         :toggle="toggleSidebar"
         :inventory="inventory"
         :cart="cart"
+        :remove="removeItem"
       ></sidebar>
 
       <footer>
@@ -123,6 +124,14 @@
             cart: {}
           }
         },
+        computed: {
+          // Calculate the total quantity of items in the cart
+          totalQuantity() {
+            return Object.values(this.cart).reduce((total, quantity) => {
+              return total + quantity
+            }, 0)
+          }
+        },
         methods: {
           // Add the quantity of a product to the cart
           addToCart(index) {
@@ -143,6 +152,12 @@
           // Toggle the sidebar
           toggleSidebar() {
             this.showSidebar = !this.showSidebar
+          },
+
+          removeItem(index) {
+            // Remove the item from the cart
+            // Please note that the key is the index of the item in the inventory object
+            delete this.cart[index]
           }
         },
 
@@ -158,14 +173,14 @@
 
       app.component('sidebar',{
         // "toggle" is the function that will be called when the user clicks on the close button
-        props: ['toggle', 'inventory', 'cart'],
+        props: ['toggle', 'inventory', 'cart', 'remove'],
         computed: {
           cartTotal() {
             // Calculate the total price of the cart
             // Please note that the key is the index of the item in the inventory object
             return Object.keys(this.cart).reduce((total, key) => {
-              return total + (this.inventory[key].price.USD * this.cart[key])
-            }, 0)
+              return total + this.inventory[key].price.USD * this.cart[key]
+            }, 0).toFixed(2)
           }
         },
         template: `
@@ -199,9 +214,9 @@
                     <td class="center">{{ inventory[product_index].name }}</td>
                     <td class="center">\${{ inventory[product_index].price.USD }}</td>
                     <td class="center">{{ quantity }}</td>
-                    <td class="center">\${{ inventory[product_index].price.USD * quantity }}</td>
+                    <td class="center">\${{ (inventory[product_index].price.USD * quantity).toFixed(2) }}</td>
                     <td class="center">
-                      <button class="btn btn-light cart-remove">
+                      <button @click="remove(product_index)" class="btn btn-light cart-remove">
                         &times;
                       </button>
                     </td>
