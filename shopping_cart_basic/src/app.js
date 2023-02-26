@@ -37,6 +37,7 @@ let app = Vue.createApp({
 
     // Toggle the sidebar
     toggleSidebar() {
+      console.log(this.showSidebar)
       this.showSidebar = !this.showSidebar
     },
 

@@ -264,6 +264,16 @@
         </div>
       </main>
 
+      <!-- Use showSidebar to toggle the sidebar -->
+      <!-- Please note that we also want to toggle the sidebar from its child component, so passing the toggleSidebar method as a prop is necessary -->
+      <sidebar
+        v-if="showSidebar"
+        :toggle="toggleSidebar"
+        :inventory="inventory"
+        :cart="cart"
+        :remove="removeItem"
+      ></sidebar>
+
     </div>
 
     <!-- You should include the latest version of Vue.js -->
