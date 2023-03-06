@@ -8,7 +8,7 @@ By working through this project, you will gain a solid understanding of:
 - How to use Vue.js directly in an HTML page by creating a Vue instance that controls elements and manages data flow between components.
 - Basic but essential directives in Vue.js, such as v-for, v-if, v-on, v-bind, and v-model.
 
-## References
+# References
 
 Here are some resources that will be useful as you work on the Shopping Cart app:
 
@@ -17,7 +17,7 @@ Here are some resources that will be useful as you work on the Shopping Cart app
 - 📚 Useful Tutorial:
     - [Vue.js Course for Beginners](https://www.youtube.com/watch?v=FXpIoQ_rT_c&t=0s)
 
-## Hints
+# Hints
 
 - My comments in the code provide detailed information about the project in the video, which might be useful for beginners learning Vue.js for the first time.
 - Follow the Git commits to see how the app is built step by step.
