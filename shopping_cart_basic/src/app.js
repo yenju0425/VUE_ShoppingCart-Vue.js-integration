@@ -82,6 +82,9 @@ let app = Vue.createApp({
     const rsp = await fetch('../food.json')
     const data = await rsp.json()
     this.inventory = data
+
+    // Add an event listener for the beforeunload event to save the cart to the cookie
+    window.addEventListener('beforeunload', this.saveCart)
   }
 })
 
