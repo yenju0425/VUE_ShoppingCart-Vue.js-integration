@@ -17,6 +17,12 @@ Here are some resources that will be useful as you work on the Shopping Cart app
 - 📚 Useful Tutorial:
     - [Vue.js Course for Beginners](https://www.youtube.com/watch?v=FXpIoQ_rT_c&t=0s)
 
+# Demonstration
+
+Here is the video demonstration of the Shopping Cart app:
+
+* [Overview](https://drive.google.com/file/d/16yOt8abalpAvltDVBYfwFnKKWQSWKaNa/view?usp=share_link)
+
 # Hints
 
 - My comments in the code provide detailed information about the project in the video, which might be useful for beginners learning Vue.js for the first time.
