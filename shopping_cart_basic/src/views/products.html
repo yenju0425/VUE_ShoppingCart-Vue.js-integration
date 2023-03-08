@@ -5,9 +5,7 @@
     <link rel="stylesheet" href="../styles/style.min.css">
   </head>
   <body>
-
     <div id="app">
-
       <header class="top-bar spread">
         <nav class="top-bar-nav">
           <a href="./app.html" class="top-bar-link">
@@ -21,18 +19,14 @@
             <span>Past Orders</span>
           </a>
         </nav>
-
         <!-- When the user clicks the cart icon, toggle the sidebar -->
         <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart ({{ totalQuantity }})</span>
         </a>
-
       </header>
-
       <main class="wrapper">
         <h1>Products</h1>
-
         <div class="card-container">
           <product_card
             v-for="(product, index) in inventory"
@@ -44,7 +38,6 @@
           ></product_card>
         </div>
       </main>
-
       <!-- Use showSidebar to toggle the sidebar -->
       <!-- Please note that we also want to toggle the sidebar from its child component, so passing the toggleSidebar method as a prop is necessary -->
       <sidebar
@@ -54,14 +47,10 @@
         :cart="cart"
         :remove="removeItem"
       ></sidebar>
-
     </div>
-
     <!-- You should include the latest version of Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
     <!-- Your VUE code goes here -->
     <script src="../app.js"></script>
-
   </body>
 </html>

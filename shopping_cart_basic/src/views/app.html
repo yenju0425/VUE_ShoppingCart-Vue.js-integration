@@ -7,9 +7,7 @@
     <link rel="shortcut icon" href="../../public/favicon.ico" type="image/ico">
   </head>
   <body>
-
     <div id="app">
-
       <header class="top-bar spread">
         <nav class="top-bar-nav">
           <a href="./app.html" class="top-bar-link">
@@ -23,28 +21,21 @@
             <span>Past Orders</span>
           </a>
         </nav>
-
         <!-- When the user clicks the cart icon, toggle the sidebar -->
         <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart ({{ totalQuantity }})</span>
         </a>
-
       </header>
-
       <div class="splash-container">
         <div class="splash">
           <h1>Splendid Food</h1>
         </div>
       </div>
-
       <main class="wrapper">
-
         <h2>Recommended</h2>
-
         <!-- Only show the first 3 items to be recommended -->  
         <div class="recommended">
-
           <product_card
             v-for="(product, index) in inventory.slice(0,3)"
             :key="index"
@@ -53,11 +44,8 @@
             :product="product"
             :add="addToCart"
           ></product_card>
-
         </div>
-
       </main>
-
       <!-- Use showSidebar to toggle the sidebar -->
       <!-- Please note that we also want to toggle the sidebar from its child component, so passing the toggleSidebar method as a prop is necessary -->
       <sidebar
@@ -67,15 +55,11 @@
         :cart="cart"
         :remove="removeItem"
       ></sidebar>
-
       <footer>
       </footer>
-
     </div>
-
     <!-- You should include the latest version of Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
     <!-- Your VUE code goes here -->
     <script src="../app.js"></script>
   </body>

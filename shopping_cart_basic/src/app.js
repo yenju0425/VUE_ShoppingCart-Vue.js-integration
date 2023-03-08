@@ -1,5 +1,5 @@
 let app = Vue.createApp({
-  data() {
+  data () {
     return {
       showSidebar: false,
 
@@ -16,29 +16,26 @@ let app = Vue.createApp({
   },
   computed: {
     // Calculate the total quantity of items in the cart
-    totalQuantity() {
+    totalQuantity () {
       return Object.values(this.cart).reduce((total, quantity) => {
         return total + quantity
       }, 0)
     }
   },
   methods: {
-    saveCart() {
+    saveCart () {
       // Convert the object to a string using JSON.stringify()
       const cartString = JSON.stringify(this.cart);
 
       // Write the string to the cookie using document.cookie
       document.cookie = "cart=" + cartString + "; path=../";
     },
-
-    loadCart() {
+    loadCart () {
       // The regular expression to match the cart cookie
       const cartRegex = /^(?:.*;)?\s*cart=([^;]+)(?:.*)?$/
   
       // Read the string from the cookie using document.cookie
-      console.log("CookieString: " + document.cookie)
       const cartCookieString = document.cookie.replace(cartRegex, "$1")
-      console.log("CookieString: " + document.cookie)
       console.log("cartCookieString: " + cartCookieString)
 
       if (!cartCookieString) {
