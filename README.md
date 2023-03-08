@@ -21,7 +21,7 @@ Here are some resources that will be useful as you work on the Shopping Cart app
 
 Here is the video demonstration of the Shopping Cart app:
 
-* [Overview](https://drive.google.com/file/d/16yOt8abalpAvltDVBYfwFnKKWQSWKaNa/view?usp=share_link)
+* [Demonstration](https://drive.google.com/file/d/16yOt8abalpAvltDVBYfwFnKKWQSWKaNa/view?usp=share_link)
 
 # Hints
 
