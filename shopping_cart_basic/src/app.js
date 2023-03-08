@@ -8,18 +8,18 @@ let app = Vue.createApp({
 
       // This cart object will store the items that are added to the cart
       cart: {}
-    }
+    };
   },
   // Use the beforeMount hook to load the cart from the cookie
   beforeMount: function () {
-    this.loadCart()
+    this.loadCart();
   },
   computed: {
     // Calculate the total quantity of items in the cart
     totalQuantity () {
       return Object.values(this.cart).reduce((total, quantity) => {
-        return total + quantity
-      }, 0)
+        return total + quantity;
+      }, 0);
     }
   },
   methods: {
@@ -32,43 +32,43 @@ let app = Vue.createApp({
     },
     loadCart () {
       // The regular expression to match the cart cookie
-      const cartRegex = /^(?:.*;)?\s*cart=([^;]+)(?:.*)?$/
+      const cartRegex = /^(?:.*;)?\s*cart=([^;]+)(?:.*)?$/;
   
       // Read the string from the cookie using document.cookie
-      const cartCookieString = document.cookie.replace(cartRegex, "$1")
-      console.log("cartCookieString: " + cartCookieString)
+      const cartCookieString = document.cookie.replace(cartRegex, "$1");
+      console.log("cartCookieString: " + cartCookieString);
 
       if (!cartCookieString) {
-        return
+        return;
       }
 
       // Convert the string back to an object using JSON.parse()
-      this.cart = JSON.parse(cartCookieString)
+      this.cart = JSON.parse(cartCookieString);
     },
 
     // Add the quantity of a product to the cart
     addToCart(index, quentity) {
       // Set the cart to 0 if it doesn't exist
       if (!this.cart[index]) {
-        this.cart[index] = 0
+        this.cart[index] = 0;
       }
 
       // Add whatever is in the inventory to the cart, based on the type
-      this.cart[index] += quentity
+      this.cart[index] += quentity;
 
-      console.log(this.cart)
+      console.log(this.cart);
     },
 
     // Toggle the sidebar
     toggleSidebar() {
-      console.log(this.showSidebar)
-      this.showSidebar = !this.showSidebar
+      console.log(this.showSidebar);
+      this.showSidebar = !this.showSidebar;
     },
 
     removeItem(index) {
       // Remove the item from the cart
       // Please note that the key is the index of the item in the inventory object
-      delete this.cart[index]
+      delete this.cart[index];
     }
   },
 
@@ -76,16 +76,16 @@ let app = Vue.createApp({
   // The async keywork will make the mounted method return a promise, and the await keyword is used to pause the function execution until the promise is resolved.
   // A `promise` is used to represents a value that may not be available yet but will be resolved at some point in the future.
   async mounted() {
-    const rsp = await fetch('../food.json')
-    const data = await rsp.json()
-    this.inventory = data
+    const rsp = await fetch('../food.json');
+    const data = await rsp.json();
+    this.inventory = data;
 
     // Add an event listener for the beforeunload event to save the cart to the cookie
-    window.addEventListener('beforeunload', this.saveCart)
+    window.addEventListener('beforeunload', this.saveCart);
   }
-})
+});
 
-app.component('sidebar',{
+app.component('sidebar', {
   // "toggle" is the function that will be called when the user clicks on the close button
   props: ['toggle', 'inventory', 'cart', 'remove'],
   computed: {
@@ -93,14 +93,14 @@ app.component('sidebar',{
       // Calculate the total price of the cart
       // Please note that the key is the index of the item in the inventory object
       return Object.keys(this.cart).reduce((total, key) => {
-        return total + this.inventory[key].price.USD * this.cart[key]
-      }, 0).toFixed(2)
+        return total + this.inventory[key].price.USD * this.cart[key];
+      }, 0).toFixed(2);
     }
   },
   methods: {
     iconClass(product_index) {
-      console.log(this.inventory[product_index].icon)
-      return `icofont-${this.inventory[product_index].icon} icofont-2x`
+      console.log(this.inventory[product_index].icon);
+      return `icofont-${this.inventory[product_index].icon} icofont-2x`;
     }
   },
   template: `
@@ -153,10 +153,10 @@ app.component('sidebar',{
         </div>
       </div>
     </aside>
-    `
-})
+  `
+});
 
-app.component('product_card',{
+app.component('product_card', {
   props: [
     'product',
     'index',
@@ -165,23 +165,23 @@ app.component('product_card',{
   data () {
     return {
       quantity: 0
-    }
+    };
   },
   methods: {
     resetQuantity () {
-      this.quantity = 0
+      this.quantity = 0;
     },
     addAndReset () {
       // add the item to the cart
-      this.add(this.index, this.quantity)
+      this.add(this.index, this.quantity);
 
       // reset the quantity to 0
-      this.resetQuantity()
+      this.resetQuantity();
     }
   },
   computed: {
     iconClass () {
-      return `icofont-${this.product.icon} icofont-3x`
+      return `icofont-${this.product.icon} icofont-3x`;
     }
   },
   template: `
@@ -228,7 +228,7 @@ app.component('product_card',{
       </div>
     </div>
     `
-})
+});
 
 // Always remember to mount your app
-app.mount('#app')
+app.mount('#app');
