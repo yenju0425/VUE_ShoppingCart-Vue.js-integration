@@ -2,9 +2,9 @@
 <html>
   <head>
     <title>Splendid Food</title>
-    <link rel="stylesheet" href="styles/style.min.css">
-    <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="../public/favicon.ico" type="image/ico">
+    <link rel="stylesheet" href="../styles/style.min.css">
+    <link rel="icon" href="../../public/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../public/favicon.ico" type="image/ico">
   </head>
   <body>
 
@@ -12,14 +12,14 @@
 
       <header class="top-bar spread">
         <nav class="top-bar-nav">
-          <a href="#" class="top-bar-link">
+          <a href="./app.html" class="top-bar-link" @click="saveCart">
             <i class="icofont-spoon-and-fork"></i>
             <span>Home</span>
           </a>
-          <a href="views/products.html" class="top-bar-link">
+          <a href="./products.html" class="top-bar-link" @click="saveCart">
             <span>Products</span>
           </a>
-          <a href="views/past-orders.html" class="top-bar-link">
+          <a href="./past-orders.html" class="top-bar-link" @click="saveCart">
             <span>Past Orders</span>
           </a>
         </nav>
@@ -77,6 +77,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <!-- Your VUE code goes here -->
-    <script src="./app.js"></script>
+    <script src="../app.js"></script>
   </body>
 </html>

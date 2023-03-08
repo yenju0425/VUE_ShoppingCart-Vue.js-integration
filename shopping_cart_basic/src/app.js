@@ -10,6 +10,10 @@ let app = Vue.createApp({
       cart: {}
     }
   },
+  // Use the beforeMount hook to load the cart from the cookie
+  beforeMount: function () {
+    this.loadCart()
+  },
   computed: {
     // Calculate the total quantity of items in the cart
     totalQuantity() {
@@ -19,6 +23,32 @@ let app = Vue.createApp({
     }
   },
   methods: {
+    saveCart() {
+      // Convert the object to a string using JSON.stringify()
+      const cartString = JSON.stringify(this.cart);
+
+      // Write the string to the cookie using document.cookie
+      document.cookie = "cart=" + cartString + "; path=../";
+    },
+
+    loadCart() {
+      // The regular expression to match the cart cookie
+      const cartRegex = /^(?:.*;)?\s*cart=([^;]+)(?:.*)?$/
+  
+      // Read the string from the cookie using document.cookie
+      console.log("CookieString: " + document.cookie)
+      const cartCookieString = document.cookie.replace(cartRegex, "$1")
+      console.log("CookieString: " + document.cookie)
+      console.log("cartCookieString: " + cartCookieString)
+
+      if (!cartCookieString) {
+        return
+      }
+
+      // Convert the string back to an object using JSON.parse()
+      this.cart = JSON.parse(cartCookieString)
+    },
+
     // Add the quantity of a product to the cart
     addToCart(index, quentity) {
       // Set the cart to 0 if it doesn't exist
@@ -49,7 +79,7 @@ let app = Vue.createApp({
   // The async keywork will make the mounted method return a promise, and the await keyword is used to pause the function execution until the promise is resolved.
   // A `promise` is used to represents a value that may not be available yet but will be resolved at some point in the future.
   async mounted() {
-    const rsp = await fetch('./food.json')
+    const rsp = await fetch('../food.json')
     const data = await rsp.json()
     this.inventory = data
   }
